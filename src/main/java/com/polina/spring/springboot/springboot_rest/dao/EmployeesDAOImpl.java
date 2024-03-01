@@ -22,19 +22,20 @@ public class EmployeesDAOImpl implements EmployeeDAO {
 
     @Override
     public void saveEmployee(Employee employee) {
-        entityManager.merge(employee);// save or update
+        Employee emp = entityManager.merge(employee);// save or update
+        employee.setId(emp.getId());
     }
 
     @Override
     public Employee getEmployee(int id) {
-        return entityManager.find(Employee.class,id);
+        return entityManager.find(Employee.class, id);
     }
 
     @Override
     public void deleteEmployee(int id) {
         Query query = entityManager.createQuery("delete from Employee " +
                 " where id=:empId");
-        query.setParameter("empId",id);
+        query.setParameter("empId", id);
         query.executeUpdate();
     }
 }
